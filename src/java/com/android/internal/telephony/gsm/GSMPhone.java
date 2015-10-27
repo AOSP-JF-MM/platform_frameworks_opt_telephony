@@ -1494,7 +1494,7 @@ public class GSMPhone extends PhoneBase {
                         !"".equals((String)ar.result)) {
                     String prop = PROPERTY_BASEBAND_VERSION +
                             ((mPhoneId == 0 ) ? "" : Integer.toString(mPhoneId));
-                    SystemProperties.set(prop, (String)ar.result);
+                    setSystemProperty(prop, (String)ar.result);
                 }
             break;
 
