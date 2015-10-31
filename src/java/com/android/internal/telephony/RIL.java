@@ -3974,6 +3974,10 @@ public class RIL extends BaseCommands implements CommandsInterface {
         }
 
         ret = new ArrayList<OperatorInfo>(strings.length / 4);
+	Operators init = null;
+	if (strings.length !=0) {
+	    init = new Operators();
+	}
 
         for (int i = 0 ; i < strings.length ; i += 4) {
             ret.add (
