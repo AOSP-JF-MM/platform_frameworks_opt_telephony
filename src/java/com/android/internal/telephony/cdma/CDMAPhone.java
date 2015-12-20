@@ -1296,10 +1296,8 @@ public class CDMAPhone extends PhoneBase {
                 }
 
                 if (DBG) Rlog.d(LOG_TAG, "Baseband version: " + ar.result);
-                if (!"".equals((String)ar.result)) {
-                    setSystemProperty(TelephonyProperties.PROPERTY_BASEBAND_VERSION,
-                                      (String)ar.result);
-                }
+                TelephonyManager.from(mContext).setBasebandVersionForPhone(getPhoneId(),
+                        (String)ar.result);
             }
             break;
 

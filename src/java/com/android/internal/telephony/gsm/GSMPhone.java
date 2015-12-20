@@ -55,7 +55,6 @@ import static com.android.internal.telephony.CommandsInterface.CF_REASON_NOT_REA
 import static com.android.internal.telephony.CommandsInterface.CF_REASON_BUSY;
 import static com.android.internal.telephony.CommandsInterface.CF_REASON_UNCONDITIONAL;
 import static com.android.internal.telephony.CommandsInterface.SERVICE_CLASS_VOICE;
-import static com.android.internal.telephony.TelephonyProperties.PROPERTY_BASEBAND_VERSION;
 
 import com.android.internal.telephony.TelephonyPluginDelegate;
 import com.android.internal.telephony.dataconnection.DcTracker;
@@ -1581,12 +1580,8 @@ public class GSMPhone extends PhoneBase {
                 }
 
                 if (LOCAL_DEBUG) Rlog.d(LOG_TAG, "Baseband version: " + ar.result);
-                if (SubscriptionManager.isValidPhoneId(mPhoneId) &&
-                        !"".equals((String)ar.result)) {
-                    String prop = PROPERTY_BASEBAND_VERSION +
-                            ((mPhoneId == 0 ) ? "" : Integer.toString(mPhoneId));
-                    setSystemProperty(prop, (String)ar.result);
-                }
+                TelephonyManager.from(mContext).setBasebandVersionForPhone(getPhoneId(),
+                        (String)ar.result);
             break;
 
             case EVENT_GET_IMEI_DONE:
