@@ -93,7 +93,6 @@ public class UiccController extends Handler {
     private static final int EVENT_SIM_REFRESH = 4;
 
     private static final String DECRYPT_STATE = "trigger_restart_framework";
-    private boolean mRadioApmSimNotPwdn = false;
 
     private CommandsInterface[] mCis;
     private UiccCard[] mUiccCards = new UiccCard[TelephonyManager.getDefault().getPhoneCount()];
@@ -123,13 +122,14 @@ public class UiccController extends Handler {
         if (DBG) log("Creating UiccController");
         mContext = c;
         mCis = ci;
-        mRadioApmSimNotPwdn = SystemProperties.getBoolean("persist.radio.apm_sim_not_pwdn", false);
+        boolean radioApmSimNotPwdn = SystemProperties.getBoolean(
+                "persist.radio.apm_sim_not_pwdn", false);
         for (int i = 0; i < mCis.length; i++) {
             Integer index = new Integer(i);
             mCis[i].registerForIccStatusChanged(this, EVENT_ICC_STATUS_CHANGED, index);
             // TODO remove this once modem correctly notifies the unsols
             if (DECRYPT_STATE.equals(SystemProperties.get("vold.decrypt")) &&
-                    (mCis[i].getRilVersion() >= 9) || mRadioApmSimNotPwdn) {
+                    (mCis[i].getRilVersion() >= 9) || radioApmSimNotPwdn) {
                 // Reading ICC status in airplane mode is only supported in QCOM
                 // RILs when this property is set to true
                 mCis[i].registerForAvailable(this, EVENT_ICC_STATUS_CHANGED, index);
