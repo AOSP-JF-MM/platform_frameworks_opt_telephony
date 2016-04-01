@@ -264,6 +264,7 @@ public class DcTracker extends DcTrackerBase {
         mPhone.getContext().getContentResolver().unregisterContentObserver(mApnObserver);
         mApnContexts.clear();
         mPrioritySortedApnContexts.clear();
+        unregisterForAllEvents();
 
         if (mCdmaSsm != null) {
             mCdmaSsm.dispose(this);
@@ -290,6 +291,7 @@ public class DcTracker extends DcTrackerBase {
         mPhone.getServiceStateTracker().unregisterForDataRoamingOff(this);
         mPhone.getServiceStateTracker().unregisterForPsRestrictedEnabled(this);
         mPhone.getServiceStateTracker().unregisterForPsRestrictedDisabled(this);
+        mPhone.getServiceStateTracker().unregisterForDataRegStateOrRatChanged(this);
         //SubscriptionManager.unregisterForDdsSwitch(this);
     }
 
