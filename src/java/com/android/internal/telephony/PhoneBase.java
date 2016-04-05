@@ -2759,12 +2759,6 @@ public abstract class PhoneBase extends Handler implements Phone {
         return false;
     }
 
-    /* Validate the given extras if the call is for CS domain or not */
-    protected boolean shallDialOnCircuitSwitch(Bundle extras) {
-            return (extras != null && extras.getInt(QtiVideoCallConstants.EXTRA_CALL_DOMAIN,
-                    QtiVideoCallConstants.DOMAIN_AUTOMATIC) == QtiVideoCallConstants.DOMAIN_CS);
-    }
-
     public void sendEmergencyCallStateChange(boolean callActive) {
         if (mBroadcastEmergencyCallStateChanges) {
             Intent intent = new Intent(TelephonyIntents.ACTION_EMERGENCY_CALL_STATE_CHANGED);
@@ -2773,6 +2767,12 @@ public abstract class PhoneBase extends Handler implements Phone {
             ActivityManagerNative.broadcastStickyIntent(intent, null, UserHandle.USER_ALL);
             if (DBG) Rlog.d(LOG_TAG, "sendEmergencyCallStateChange");
         }
+    }
+
+    /* Validate the given extras if the call is for CS domain or not */
+    protected boolean shallDialOnCircuitSwitch(Bundle extras) {
+            return (extras != null && extras.getInt(QtiVideoCallConstants.EXTRA_CALL_DOMAIN,
+                    QtiVideoCallConstants.DOMAIN_AUTOMATIC) == QtiVideoCallConstants.DOMAIN_CS);
     }
 
     @Override
