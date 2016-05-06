@@ -2150,6 +2150,11 @@ public interface Phone {
     public void getModemActivityInfo(Message response);
 
     /**
+     * Set MAX transmit power state
+     */
+    public void setMaxTransmitPower(int state, Message response);
+
+    /**
      * Set boolean broadcastEmergencyCallStateChanges
      */
     public void setBroadcastEmergencyCallStateChanges(boolean broadcast);
